@@ -17,7 +17,11 @@ def assign_segment(row: pd.Series) -> str:
         return "New Customers"
     if r <= 2 and f >= 3:
         return "At Risk"
-    return "Lost Customers"
+    if r <= 3 and f <= 2:
+        return "Lost Customers"
+
+    # The rules above cover every possible R/F score combination from 1-5.
+    raise ValueError(f"Unable to assign segment for R={r}, F={f}, M={m}")
 
 
 def add_segments(rfm: pd.DataFrame) -> pd.DataFrame:
