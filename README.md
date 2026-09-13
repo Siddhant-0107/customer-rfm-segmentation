@@ -273,4 +273,4 @@ These are deliberately outside the current scope so that the project remains foc
 
 ## Repository
 
-urlcustomer-rfm-segmentation on GitHubhttps://github.com/Siddhant-0107/customer-rfm-segmentation
+[GitHub repository](https://github.com/Siddhant-0107/customer-rfm-segmentation)
