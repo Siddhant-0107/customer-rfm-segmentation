@@ -6,18 +6,22 @@ import pandas as pd
 
 
 def assign_segment(row: pd.Series) -> str:
-    """Assign one of five business-facing segments from RFM scores."""
+    """Assign one of five business-facing segments from RFM scores.
+
+    Rules are based on R and F scores; M is used to distinguish Champions
+    from other highly engaged customers.
+    """
     r, f, m = int(row["r_score"]), int(row["f_score"]), int(row["m_score"])
 
     if r >= 4 and f >= 4 and m >= 4:
         return "Champions"
-    if r >= 3 and f >= 4:
+    if r >= 3 and f >= 3:
         return "Loyal Customers"
     if r >= 4 and f <= 2:
         return "New Customers"
     if r <= 2 and f >= 3:
         return "At Risk"
-    if r <= 3 and f <= 2:
+    if r <= 2 and f <= 2:
         return "Lost Customers"
 
     # The rules above cover every possible R/F score combination from 1-5.
