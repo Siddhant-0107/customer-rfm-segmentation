@@ -8,6 +8,7 @@ import pandas as pd
 import plotly.express as px
 import streamlit as st
 
+from generate_data import main as generate_data
 from src.cleaning import clean_transactions, load_transactions
 from src.rfm import build_rfm
 from src.segmentation import SEGMENT_ACTIONS, add_segments
@@ -30,7 +31,6 @@ SEGMENT_ORDER = [
 
 
 @st.cache_data
-
 def load_transactions_data() -> pd.DataFrame:
     return clean_transactions(load_transactions(str(DATA_PATH)))
 
@@ -40,9 +40,11 @@ st.caption(
     "Identify high-value, loyal, new, at-risk, and lost customers from transactional behavior."
 )
 
+# The synthetic CSV is intentionally excluded from Git. Generate it automatically
+# when the app is deployed so the public dashboard is self-contained.
 if not DATA_PATH.exists():
-    st.warning("Data file not found. Run `python generate_data.py` first.")
-    st.stop()
+    with st.spinner("Preparing the synthetic transaction dataset..."):
+        generate_data()
 
 transactions = load_transactions_data()
 min_date = transactions["transaction_date"].min().date()
